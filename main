@@ -1,0 +1,167 @@
+import java.lang.*; 
+import java.util.*; 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+class unbox
+{
+	public static void main(String [] args)
+	{
+		String inline = "";
+	
+		try
+		{
+			URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?address=chicago&sensor=false&#8221");
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+			int responsecode = conn.getResponseCode();
+			System.out.println("Response code is: " +responsecode);
+			
+			if(responsecode != 200)
+				throw new RuntimeException("HttpResponseCode: " +responsecode);
+			else
+			{
+				Scanner sc = new Scanner(url.openStream());
+				while(sc.hasNext())
+				{
+					inline+=sc.nextLine();
+				}
+				System.out.println("\nJSON Response in String format"); 
+				System.out.println(inline);
+				sc.close();
+			}
+			
+			JSONParser parse = new JSONParser();
+			JSONObject jobj = (JSONObject)parse.parse(inline);
+			JSONArray jsonarr_1 = (JSONArray) jobj.get("results");
+			for(int i=0;i<jsonarr_1.size();i++)
+			{
+				JSONObject jsonobj_1 = (JSONObject)jsonarr_1.get(i);
+				JSONArray jsonarr_2 = (JSONArray) jsonobj_1.get("address_components");
+				System.out.println("Elements under results array");
+				System.out.println("\nPlace id: " +jsonobj_1.get("place_id"));
+				System.out.println("Types: " +jsonobj_1.get("types"));
+				System.out.println("Elements under address_components array");
+				System.out.println("The long names, short names and types are:");
+				for(int j=0;j<jsonarr_2.size();j++)
+				{
+					JSONObject jsonobj_2 = (JSONObject) jsonarr_2.get(j);
+					String str_data1 = (String) jsonobj_2.get("long_name");
+					System.out.println(str_data1);
+					String str_data2 = (String) jsonobj_2.get("short_name");
+					System.out.println(str_data2);
+					System.out.println(jsonobj_2.get("types"));
+					System.out.println("\n");
+				}
+				
+			}
+			conn.disconnect();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+responseJson = JSON.parse(responseBody);
+  var a=[];
+var list = (responseJson.columns).length;
+console.log(list);
+   for (var i = 0; i < list; i++) 
+    {
+    var counter = responseJson.columns[i];
+    schID=counter.columnKey
+
+    a.push(schID)
+    }
+    a= JSON.stringify(a)
+    postman.setEnvironmentVariable("schID", a);
+    
+    //converting the var list into string
+    Arrays.toString(list));
+    
+    
+    
+    {% paginate collections["all-products"].products by 10000 %}
+
+  {% for product in collections["all-products"].products %}
+
+     {% comment %}looping through all 10000 products{% endcomment %}
+
+  {% endfor %}
+
+{% endpaginate %}
+
+//Converting array into CSV File
+<?php
+
+function arrayToCSV($inputArray)
+{
+    $csvFieldRow = array();
+    foreach ($inputArray as $CSBRow) {
+        $csvFieldRow[] = str_putcsv($CSBRow);
+    }
+    $csvData = implode("\n", $csvFieldRow);
+    return $csvData;
+}
+
+function str_putcsv($input, $delimiter = ',', $enclosure = '"')
+{
+    $fp = fopen('php://temp', 'r+');
+    fputcsv($fp, $input, $delimiter, $enclosure);
+    rewind($fp);
+    $data = fread($fp, 1048576);
+    fclose($fp);
+    return rtrim($data, "\n");
+}
+
+$inputArray = array
+?>
+    
+def upload_files(path):
+    session = boto3.Session(
+        aws_access_key_id='',
+        aws_secret_access_key='',
+        region_name='us-east-1'
+    )
+    s3 = session.resource('s3')
+    bucket = s3.Bucket('ag-tpch')
+
+    for subdir, dirs, files in os.walk(path):
+        for file in files:
+            full_path = os.path.join(subdir, file)
+            with open(full_path, 'rb') as data:
+                bucket.put_object(Key=full_path[len(path)+1:], Body=data)
+
+if __name__ == "__main__":
+    upload_files('E:/Unbxd-2021-interns_test-dilip')
+    
+svc := s3.New(
+  s3Session.New(
+   &aws.Config{
+    Region:   aws.String("eu-west-1"),
+    LogLevel: aws.LogLevel(aws.LogDebug),
+   },
+  ),
+ )
+req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
+    Bucket: aws.String("myBucket"),
+    Key:    aws.String("myKey"),
+})
+str, err := req.Presign(15 * time.Minute)
+
+log.Println("The URL is:", str, " err:", err)
+
+req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
+   Bucket: aws.String("myBucket"),
+   Key:    aws.String("myKey"),
+  ResponseContentDisposition: aws.String("attachment;filename=Unbxd-2021-interns test_dilip.pdf"),
+ })
